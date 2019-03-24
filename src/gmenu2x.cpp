@@ -285,7 +285,7 @@ GMenu2X::GMenu2X() {
 	SDL_ShowCursor(0);
 #elif defined(TARGET_RS97)
 	SDL_ShowCursor(0);
-	s->ScreenSurface = SDL_SetVideoMode(320, 480, confInt["videoBpp"], SDL_HWSURFACE/*|SDL_DOUBLEBUF*/);
+	s->ScreenSurface = SDL_SetVideoMode(800, 480, confInt["videoBpp"], SDL_HWSURFACE/*|SDL_DOUBLEBUF*/);
 	s->raw = SDL_CreateRGBSurface(SDL_SWSURFACE, resX, resY, confInt["videoBpp"], 0, 0, 0, 0);
 #else
 	s->raw = SDL_SetVideoMode(resX, resY, confInt["videoBpp"], SDL_HWSURFACE|SDL_DOUBLEBUF);
@@ -607,7 +607,7 @@ bool GMenu2X::inputCommonActions(bool &inputAction) {
 	if (powerManager->suspendActive) {
 		// SUSPEND ACTIVE
 		input.setWakeUpInterval(0);
-		while (!input[POWER]) {
+		while (!input[CONFIRM]) {
 			input.update();
 		}
 		powerManager->doSuspend(0);
@@ -1751,7 +1751,7 @@ void GMenu2X::checkUDC() {
 
 			while (udcConnectedOnBoot == UDC_CONNECT && getUDCStatus() == UDC_CONNECT) {
 				input.update();
-				if ( input[MENU] && input[POWER]) udcConnectedOnBoot = UDC_REMOVE;
+				if ( input[MENU] && input[CONFIRM]) udcConnectedOnBoot = UDC_REMOVE;
 			}
 
 			{
