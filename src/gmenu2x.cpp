@@ -190,7 +190,7 @@ int16_t getUDCStatus(void) {
 
 int16_t tvOutPrev = false, tvOutConnected;
 bool getTVOutStatus() {
-	if (memdev > 0) return !(memregs[0x10300 >> 2] >> 6 & 0b1);
+	if (memdev > 0) return !(memregs[0x10300 >> 2] >> 25 & 0b1);
 	return false;
 }
 
@@ -200,7 +200,7 @@ enum vol_mode_t {
 int16_t volumeModePrev, volumeMode;
 uint8_t getVolumeMode(uint8_t vol) {
 	if (!vol) return VOLUME_MODE_MUTE;
-	else if (memdev > 0 && !(memregs[0x10300 >> 2] >> 25 & 0b1)) return VOLUME_MODE_PHONES;
+	else if (memdev > 0 && !(memregs[0x10300 >> 2] >> 6 & 0b1)) return VOLUME_MODE_PHONES;
 	return VOLUME_MODE_NORMAL;
 }
 
